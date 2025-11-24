@@ -1,0 +1,24 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: text/csv
+Content-Disposition: attachment; filename="weather_logs.csv"
+Date: Mon, 24 Nov 2025 17:23:41 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+city,lat,lon,temperature,humidity,wind_speed,condition,precipitation_probability,source,collected_at
+Jacareí,-23.3052,-45.9658,22.4,73,1.03,nublado,,openweather,Mon Nov 24 2025 15:22:53 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,22.4,73,1.03,nublado,,openweather,Mon Nov 24 2025 15:16:02 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:47:32 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:45:28 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:44:28 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:43:27 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:42:26 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:41:25 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:39:26 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:34:09 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:30:13 GMT+0000 (Coordinated Universal Time)
+Jacareí,-23.3052,-45.9658,20.4,83,1.54,nublado,,openweather,Mon Nov 24 2025 12:25:25 GMT+0000 (Coordinated Universal Time)
+Jacarei,-23.3052,-45.9658,26.1,70,3.5,cloudy,,openweather,Sun Nov 24 2024 12:00:00 GMT+0000 (Coordinated Universal Time)

@@ -6,6 +6,7 @@ import {
   Query,
   Headers,
   UnauthorizedException,
+  StreamableFile,
 } from "@nestjs/common";
 import { WeatherService } from "./weather.service";
 import { CreateWeatherLogDto } from "./dto/create-weather-log.dto";
@@ -33,5 +34,15 @@ export class WeatherController {
   @Get("logs")
   async findAll(@Query() query: Record<string, any>) {
     return this.weatherService.findAll(query);
+  }
+
+  @Get("export.csv")
+  async exportCsv(): Promise<StreamableFile> {
+    return this.weatherService.exportCsv();
+  }
+
+  @Get("export.xlsx")
+  async exportXlsx(): Promise<StreamableFile> {
+    return this.weatherService.exportXlsx();
   }
 }
