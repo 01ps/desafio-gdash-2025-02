@@ -17,4 +17,20 @@ export class WeatherService {
     });
     return doc.save();
   }
+
+  async findAll(query: Record<string, any>) {
+    const page = Number(query.page || 1);
+    const limit = Number(query.limit || 20);
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      this.model
+        .find()
+        .sort({ collected_at: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      this.model.countDocuments(),
+    ]);
+    return { items, total, page, limit };
+  }
 }

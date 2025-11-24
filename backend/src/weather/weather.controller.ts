@@ -29,4 +29,9 @@ export class WeatherController {
     }
     return this.weatherService.create(dto);
   }
+
+  @Get("logs")
+  async findAll(@Query() query: Record<string, any>) {
+    return this.weatherService.findAll(query);
+  }
 }
