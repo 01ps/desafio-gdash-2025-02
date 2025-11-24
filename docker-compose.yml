@@ -1,0 +1,95 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    environment:
+      PORT: ${API_PORT}
+      MONGO_URI: ${MONGO_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_NAME: ${ADMIN_NAME}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+      WEATHER_INSIGHTS_MODE: ${WEATHER_INSIGHTS_MODE}
+      RABBIT_URL: ${RABBIT_URL}
+      RABBIT_QUEUE: ${RABBIT_QUEUE}
+    depends_on:
+      - mongo
+      - rabbitmq
+    ports:
+      - "3000:3000"
+
+  worker:
+    build:
+      context: ./worker
+    env_file:
+      - .env
+    environment:
+      RABBIT_URL: ${RABBIT_URL}
+      RABBIT_QUEUE: ${RABBIT_QUEUE}
+      NEST_API_URL: ${NEST_API_URL}
+      NEST_API_KEY: ${NEST_API_KEY}
+      RETRY_MAX: ${RETRY_MAX}
+      RETRY_BACKOFF_MS: ${RETRY_BACKOFF_MS}
+    depends_on:
+      - rabbitmq
+      - backend
+
+  collector:
+    build:
+      context: ./collector
+    env_file:
+      - .env
+    environment:
+      RABBIT_URL: ${RABBIT_URL}
+      RABBIT_QUEUE: ${RABBIT_QUEUE}
+      OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
+      CITY: ${CITY}
+      LAT: ${LAT}
+      LON: ${LON}
+      PUBLISH_INTERVAL_SECONDS: ${PUBLISH_INTERVAL_SECONDS}
+      COLLECTOR_SERVICE_NAME: ${COLLECTOR_SERVICE_NAME}
+    depends_on:
+      - rabbitmq
+
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      - .env
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+
+volumes:
+  mongo_data:
+  rabbitmq_data:
