@@ -16,6 +16,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -58,8 +63,10 @@ services:
       RETRY_MAX: ${RETRY_MAX}
       RETRY_BACKOFF_MS: ${RETRY_BACKOFF_MS}
     depends_on:
-      - rabbitmq
-      - backend
+      rabbitmq:
+        condition: service_healthy
+      backend:
+        condition: service_started
 
   collector:
     build:
@@ -76,7 +83,8 @@ services:
       PUBLISH_INTERVAL_SECONDS: ${PUBLISH_INTERVAL_SECONDS}
       COLLECTOR_SERVICE_NAME: ${COLLECTOR_SERVICE_NAME}
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
 
   frontend:
     build:

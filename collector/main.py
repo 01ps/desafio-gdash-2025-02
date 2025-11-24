@@ -75,7 +75,6 @@ def fetch_weather() -> WeatherPayload:
         collected_at=datetime.utcnow(),
     )
 
-
 def publish_weather(payload: WeatherPayload) -> None:
     conn = pika.BlockingConnection(pika.URLParameters(RABBIT_URL))
     channel = conn.channel()
@@ -99,6 +98,8 @@ def main() -> None:
             logger.info("cycle ok", extra={"city": payload.city})
         except Exception as exc:  # noqa: BLE001
             logger.exception("collector cycle failed", extra={"error": str(exc)})
+            time.sleep(5)
+            continue
         time.sleep(PUBLISH_INTERVAL_SECONDS)
 
 
