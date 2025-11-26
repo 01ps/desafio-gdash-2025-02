@@ -10,6 +10,7 @@ import {
 import "./index.css";
 import LoginPage from "./pages/Login";
 import DashboardPage from "./pages/Dashboard";
+import UsersPage from "./pages/Users";
 
 function ProtectedRoute() {
   const token = localStorage.getItem("access_token");
@@ -25,7 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedRoute />,
-    children: [{ index: true, element: <DashboardPage /> }],
+    children: [
+      { index: true, element: <DashboardPage /> },
+      { path: "users", element: <UsersPage /> },
+    ],
   },
 ]);
 

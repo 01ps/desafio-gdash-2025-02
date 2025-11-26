@@ -77,10 +77,7 @@ export default function DashboardPage() {
     return Object.entries(byDay)
       .slice(0, 7)
       .map(([date, data]) => {
-        const [high, low] = [
-          Math.max(...data.temps),
-          Math.min(...data.temps),
-        ];
+        const [high, low] = [Math.max(...data.temps), Math.min(...data.temps)];
         return {
           day: new Date(date).toLocaleDateString(undefined, {
             weekday: "short",
@@ -104,11 +101,6 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-slate-900 text-slate-100">
       <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
         <header className="flex items-center justify-between">
-          <Input
-            placeholder="Search for cities"
-            className="bg-slate-800 border-slate-700 text-slate-100 max-w-lg"
-            disabled
-          />
           <div className="flex items-center gap-3 text-sm">
             <a
               href={`${import.meta.env.VITE_API_URL}/weather/export.csv`}
@@ -122,6 +114,12 @@ export default function DashboardPage() {
             >
               Export XLSX
             </a>
+            <button
+              onClick={() => navigate("/users")}
+              className="text-sm text-blue-300 hover:underline"
+            >
+              Usuários
+            </button>
             <button
               onClick={handleLogout}
               className="text-red-400 hover:underline"
@@ -169,7 +167,9 @@ export default function DashboardPage() {
                     className="rounded-2xl bg-slate-900/60 p-3 text-center"
                   >
                     <p className="text-xs text-slate-400">{h.hour}</p>
-                    <p className="text-2xl my-2">{conditionIcon(h.condition)}</p>
+                    <p className="text-2xl my-2">
+                      {conditionIcon(h.condition)}
+                    </p>
                     <p className="text-lg font-semibold">{h.temp}°</p>
                   </div>
                 ))}
@@ -212,7 +212,9 @@ export default function DashboardPage() {
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-slate-300">{d.day}</span>
-                    <span className="text-xl">{conditionIcon(d.condition)}</span>
+                    <span className="text-xl">
+                      {conditionIcon(d.condition)}
+                    </span>
                     <span className="text-sm text-slate-300 capitalize">
                       {d.condition}
                     </span>

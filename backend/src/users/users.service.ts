@@ -23,7 +23,11 @@ export class UsersService {
   }
 
   async findById(id: string) {
-    const user = await this.model.findById(id).select("-password").lean().exec();
+    const user = await this.model
+      .findById(id)
+      .select("-password")
+      .lean()
+      .exec();
     if (!user) throw new NotFoundException("User not found");
     return user;
   }
